@@ -12,8 +12,8 @@ class TwitterSession
   CONSUMER = OAuth::Consumer.new(
     CONSUMER_KEY, CONSUMER_SECRET, :site => "https://twitter.com")
 
-  def initialize
-    @access_token = read_or_request_access_token
+  def initialize(token_file = 'lib/token_file.yml')
+    @access_token = read_or_request_access_token(token_file)
   end
 
   def self.get(*args)
