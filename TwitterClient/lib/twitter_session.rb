@@ -1,5 +1,3 @@
-require 'launchy'
-require 'oauth'
 require 'singleton'
 require 'yaml'
 
@@ -17,10 +15,10 @@ class TwitterSession
   end
 
   def self.get(*args)
-    self.instance.access_token.get(*args)
+    self.instance.access_token.get(*args).body
   end
 
-  def self.post
+  def self.post(*args)
     self.instance.access_token.post(*args)
   end
 
