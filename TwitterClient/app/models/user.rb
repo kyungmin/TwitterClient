@@ -26,4 +26,18 @@ class User < ActiveRecord::Base
               :twitter_user_id =>user_info["id_str"].to_i})
     user.save!
   end
+
+  def sync_statuses
+    statuses = Status.fetch_statuses_for_user(self)
+
+    twitter_status_ids = self.statuses
+    twitter_status_ids = twitter_status_ids.map(&:twitter_status_id)
+
+    statuses.each do |status|
+      puts status.persisted?
+      unless twitter_status_ids.include?(status.twitter_status_id)
+        status.save!
+      end
+    end
+  end
 end
